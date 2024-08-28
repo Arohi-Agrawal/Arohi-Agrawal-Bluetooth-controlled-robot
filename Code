@@ -1,0 +1,61 @@
+#include <SoftwareSerial.h>
+SoftwareSerial bluetooth(8, 7); 
+char t;
+
+
+int LEFT_MOTOR1 = 9;
+int LEFT_MOTOR2 = 6;
+int RIGHT_MOTOR1 = 5;
+int RIGHT_MOTOR2 = 3;
+
+
+void setup() {
+  Serial.begin(9600);
+  bluetooth.begin(9600);
+  pinMode(LEFT_MOTOR1, OUTPUT);
+  pinMode(LEFT_MOTOR2, OUTPUT);
+  pinMode(RIGHT_MOTOR1, OUTPUT);
+  pinMode(RIGHT_MOTOR2, OUTPUT);
+}
+
+
+void loop() {
+
+  if (bluetooth.available()) 
+{
+    t = bluetooth.read();
+    Serial.println(t);
+
+
+    if (t == 'F') {
+      analogWrite(LEFT_MOTOR1, 255);
+      analogWrite(LEFT_MOTOR2, 0);
+      analogWrite(RIGHT_MOTOR1, 255);
+      analogWrite(RIGHT_MOTOR2, 0);
+    }
+    else if (t == 'B') {
+      analogWrite(LEFT_MOTOR1, 0);
+      analogWrite(LEFT_MOTOR2, 255);
+      analogWrite(RIGHT_MOTOR1, 0);
+      analogWrite(RIGHT_MOTOR2, 255);
+    }
+    else if (t == 'L') {
+      analogWrite(LEFT_MOTOR1, 0);
+      analogWrite(LEFT_MOTOR2, 255);
+      analogWrite(RIGHT_MOTOR1, 255);
+      analogWrite(RIGHT_MOTOR2, 0);
+    }
+    else if (t == 'R') {
+      analogWrite(LEFT_MOTOR1, 255);
+      analogWrite(LEFT_MOTOR2, 0);
+      analogWrite(RIGHT_MOTOR1, 0);
+      analogWrite(RIGHT_MOTOR2, 255);
+    }
+    else if (t == 'S') {
+      analogWrite(LEFT_MOTOR1, 0);
+      analogWrite(LEFT_MOTOR2, 0);
+      analogWrite(RIGHT_MOTOR1, 0);
+      analogWrite(RIGHT_MOTOR2, 0);
+    }
+  }
+}
